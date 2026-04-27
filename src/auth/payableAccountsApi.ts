@@ -59,6 +59,28 @@ export async function listPayableAccounts(token: string, financialProfileId: str
   return (await response.json()) as PayableAccount[];
 }
 
+export async function listDueSoonPayableAccounts(
+  token: string,
+  financialProfileId: string,
+  daysAhead = 7
+): Promise<PayableAccount[]> {
+  const response = await fetch(
+    `${apiBaseUrl()}/api/v1/financial-profiles/${financialProfileId}/payable-accounts/due-soon?daysAhead=${daysAhead}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(await parseApiError(response));
+  }
+
+  return (await response.json()) as PayableAccount[];
+}
+
 export async function createPayableAccount(
   token: string,
   financialProfileId: string,
