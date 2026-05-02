@@ -616,6 +616,57 @@ body {
   font-size: 0.92rem;
 }
 
+.filters-card {
+  margin-top: 0.9rem;
+  background: #ffffff;
+  border: 1px solid #dde1e8;
+  border-radius: 10px;
+  padding: 0.9rem;
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(140px, 1fr));
+  gap: 0.8rem;
+}
+
+.filters-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.filters-grid label {
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.filters-grid select,
+.filters-grid input {
+  border: 1px solid #d2d8e3;
+  border-radius: 8px;
+  height: 38px;
+  padding: 0 0.6rem;
+  background: #f6f7fa;
+  font-size: 0.92rem;
+}
+
+.filters-actions {
+  margin-top: 0.8rem;
+  display: flex;
+  gap: 0.6rem;
+}
+
+.filters-actions button {
+  border: 1px solid #d2d8e3;
+  border-radius: 8px;
+  height: 36px;
+  padding: 0 0.9rem;
+  background: #f3f4f7;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 .bill-form {
   margin-top: 1rem;
   padding: 1.2rem;
@@ -930,6 +981,10 @@ body {
   }
 
   .bill-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filters-grid {
     grid-template-columns: 1fr;
   }
 }

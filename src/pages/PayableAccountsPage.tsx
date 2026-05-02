@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { listCategories } from "../auth/categoriesApi";
+import { listCategories, type CategoryOption } from "../auth/categoriesApi";
 import { getActiveFinancialProfileId } from "../auth/financialProfileStorage";
-import { type PayableAccount, listPayableAccounts } from "../auth/payableAccountsApi";
+import { type PayableAccount, type PayableAccountFilters, listPayableAccounts } from "../auth/payableAccountsApi";
 import { getAccessToken } from "../auth/tokenStorage";
 
 function formatCurrency(value: number): string {
@@ -26,7 +26,15 @@ export function PayableAccountsPage() {
   const [items, setItems] = useState<PayableAccount[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [filtersError, setFiltersError] = useState<string | null>(null);
   const [categoryNames, setCategoryNames] = useState<Record<string, string>>({});
+  const [categories, setCategories] = useState<CategoryOption[]>([]);
+  const [filters, setFilters] = useState<PayableAccountFilters>({
+    status: undefined,
+    categoryId: undefined,
+    dueDateFrom: undefined,
+    dueDateTo: undefined
+  });
 
   const createdSuccess = searchParams.get("created") === "1";
   const updatedSuccess = searchParams.get("updated") === "1";
@@ -45,14 +53,15 @@ export function PayableAccountsPage() {
       }
 
       try {
-        const [payables, categories] = await Promise.all([
-          listPayableAccounts(token, financialProfileId),
+        const [payables, categoryList] = await Promise.all([
+          listPayableAccounts(token, financialProfileId, filters),
           listCategories(token, financialProfileId)
         ]);
 
         if (active) {
           setItems(payables);
-          const mapped = Object.fromEntries(categories.map((category) => [category.id, category.name]));
+          setCategories(categoryList);
+          const mapped = Object.fromEntries(categoryList.map((category) => [category.id, category.name]));
           setCategoryNames(mapped);
         }
       } catch (requestError) {
@@ -72,7 +81,27 @@ export function PayableAccountsPage() {
     return () => {
       active = false;
     };
-  }, [blockedByConfig, financialProfileId, token]);
+  }, [blockedByConfig, financialProfileId, token, filters]);
+
+  function applyFilters(event: FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    setFiltersError(null);
+
+    if (filters.dueDateFrom && filters.dueDateTo && filters.dueDateFrom > filters.dueDateTo) {
+      setFiltersError("Periodo invalido: data inicial maior que data final.");
+      return;
+    }
+  }
+
+  function clearFilters(): void {
+    setFiltersError(null);
+    setFilters({
+      status: undefined,
+      categoryId: undefined,
+      dueDateFrom: undefined,
+      dueDateTo: undefined
+    });
+  }
 
   const totalText = useMemo(() => `Total: ${items.length}`, [items.length]);
 
@@ -92,7 +121,93 @@ export function PayableAccountsPage() {
       {updatedSuccess ? <p className="board-success">Conta atualizada com sucesso.</p> : null}
 
       {blockedByConfig ? <p className="board-warning">Perfil financeiro ativo nao encontrado.</p> : null}
+      {filtersError ? <p className="board-error">{filtersError}</p> : null}
       {error ? <p className="board-error">{error}</p> : null}
+
+      <form className="filters-card" onSubmit={applyFilters}>
+        <div className="filters-grid">
+          <div>
+            <label htmlFor="status-filter">Status</label>
+            <select
+              id="status-filter"
+              value={filters.status ?? ""}
+              onChange={(event) => {
+                const value = event.target.value;
+                setFilters((current) => ({
+                  ...current,
+                  status: value ? (value as PayableAccountFilters["status"]) : undefined
+                }));
+              }}
+            >
+              <option value="">Todos</option>
+              <option value="PENDING">Pendente</option>
+              <option value="PAID">Paga</option>
+              <option value="OVERDUE">Vencida</option>
+              <option value="CANCELED">Cancelada</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="category-filter">Categoria</label>
+            <select
+              id="category-filter"
+              value={filters.categoryId ?? ""}
+              onChange={(event) => {
+                const value = event.target.value;
+                setFilters((current) => ({
+                  ...current,
+                  categoryId: value || undefined
+                }));
+              }}
+            >
+              <option value="">Todas</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="due-date-from-filter">Vencimento de</label>
+            <input
+              id="due-date-from-filter"
+              type="date"
+              value={filters.dueDateFrom ?? ""}
+              onChange={(event) => {
+                const value = event.target.value;
+                setFilters((current) => ({
+                  ...current,
+                  dueDateFrom: value || undefined
+                }));
+              }}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="due-date-to-filter">Vencimento ate</label>
+            <input
+              id="due-date-to-filter"
+              type="date"
+              value={filters.dueDateTo ?? ""}
+              onChange={(event) => {
+                const value = event.target.value;
+                setFilters((current) => ({
+                  ...current,
+                  dueDateTo: value || undefined
+                }));
+              }}
+            />
+          </div>
+        </div>
+        <div className="filters-actions">
+          <button type="submit">Aplicar filtros</button>
+          <button type="button" onClick={clearFilters}>
+            Limpar filtros
+          </button>
+        </div>
+      </form>
 
       <div className="table-wrap">
         <table className="payables-table">
