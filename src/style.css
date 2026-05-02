@@ -587,6 +587,17 @@ body {
   text-decoration: underline;
 }
 
+.due-soon-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: #fff2d8;
+  color: #b7791f;
+}
+
 .board-success {
   color: #1a8d5a;
   margin: 0.8rem 0 0.2rem;
@@ -603,6 +614,57 @@ body {
   color: #b91c1c;
   margin: 0.8rem 0 0.2rem;
   font-size: 0.92rem;
+}
+
+.filters-card {
+  margin-top: 0.9rem;
+  background: #ffffff;
+  border: 1px solid #dde1e8;
+  border-radius: 10px;
+  padding: 0.9rem;
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(140px, 1fr));
+  gap: 0.8rem;
+}
+
+.filters-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.filters-grid label {
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.filters-grid select,
+.filters-grid input {
+  border: 1px solid #d2d8e3;
+  border-radius: 8px;
+  height: 38px;
+  padding: 0 0.6rem;
+  background: #f6f7fa;
+  font-size: 0.92rem;
+}
+
+.filters-actions {
+  margin-top: 0.8rem;
+  display: flex;
+  gap: 0.6rem;
+}
+
+.filters-actions button {
+  border: 1px solid #d2d8e3;
+  border-radius: 8px;
+  height: 36px;
+  padding: 0 0.9rem;
+  background: #f3f4f7;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .bill-form {
@@ -683,6 +745,68 @@ body {
   border-radius: 10px;
   padding: 1.4rem;
   color: #7a828f;
+}
+
+.notifications-list {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.notification-card {
+  background: #ffffff;
+  border: 1px solid #dde1e8;
+  border-radius: 10px;
+  padding: 0.95rem;
+}
+
+.notification-card.is-unread {
+  border-color: #aec3ea;
+  box-shadow: inset 0 0 0 1px #d9e5fb;
+}
+
+.notification-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.notification-card-header h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.notification-card-header span {
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.notification-card p {
+  margin: 0.45rem 0 0.8rem;
+  color: #374151;
+}
+
+.notification-card button {
+  border: 0;
+  border-radius: 8px;
+  height: 34px;
+  padding: 0 0.9rem;
+  background: #0a1838;
+  color: #f8fbff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.notification-card button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.notification-read-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #2a9e68;
 }
 
 .guard-screen {
@@ -844,7 +968,7 @@ body {
   }
 
   .side-nav-items {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .post-auth-content {
@@ -857,6 +981,10 @@ body {
   }
 
   .bill-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filters-grid {
     grid-template-columns: 1fr;
   }
 }

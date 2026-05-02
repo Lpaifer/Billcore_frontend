@@ -10,6 +10,6 @@ describe("App", () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByRole("heading", { name: "Tome controle de suas financas" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Tome controle de suas finanças" })).toBeInTheDocument();
   });
 });
