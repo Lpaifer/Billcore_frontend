@@ -1,9 +1,13 @@
 import { type FormEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { listCategories, type CategoryOption } from "../auth/categoriesApi";
 import { getActiveFinancialProfileId } from "../auth/financialProfileStorage";
 import { createPayableAccount } from "../auth/payableAccountsApi";
-import { getAccessToken } from "../auth/tokenStorage";
+import { clearAccessToken, getAccessToken } from "../auth/tokenStorage";
+import {
+  clearActiveDefaultCategoryId,
+  clearActiveFinancialProfileId
+} from "../auth/financialProfileStorage";
 
 type CreateStatus = "PENDING" | "PAID";
 
@@ -46,6 +50,13 @@ export function AddPayableAccountPage() {
           return;
         }
         const message = requestError instanceof Error ? requestError.message : "Nao foi possivel carregar categorias.";
+        if (message === "AUTH_UNAUTHORIZED") {
+          clearAccessToken();
+          clearActiveFinancialProfileId();
+          clearActiveDefaultCategoryId();
+          navigate("/login", { replace: true });
+          return;
+        }
         setError(message);
       } finally {
         if (active) {
@@ -89,6 +100,13 @@ export function AddPayableAccountPage() {
       navigate("/payable-accounts?created=1", { replace: true });
     } catch (requestError) {
       const message = requestError instanceof Error ? requestError.message : "Nao foi possivel criar a conta.";
+      if (message === "Unauthorized" || message === "AUTH_UNAUTHORIZED") {
+        clearAccessToken();
+        clearActiveFinancialProfileId();
+        clearActiveDefaultCategoryId();
+        navigate("/login", { replace: true });
+        return;
+      }
       setError(message);
     } finally {
       setIsSaving(false);
@@ -174,7 +192,9 @@ export function AddPayableAccountPage() {
 
         {blockedByConfig ? <p className="board-warning">Perfil financeiro ativo nao encontrado.</p> : null}
         {!blockedByConfig && !isLoadingCategories && categories.length === 0 ? (
-          <p className="board-warning">Nenhuma categoria disponivel para este perfil.</p>
+          <p className="board-warning">
+            Nenhuma categoria disponivel para este perfil. <Link to="/categories">Criar categoria agora</Link>.
+          </p>
         ) : null}
         {error ? <p className="board-error">{error}</p> : null}
 
