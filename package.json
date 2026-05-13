@@ -11,7 +11,6 @@
     "test": "vitest run --pool=threads"
   },
   "devDependencies": {
-    "@rolldown/binding-win32-x64-msvc": "^1.0.0-rc.12",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/react": "^19.2.14",
