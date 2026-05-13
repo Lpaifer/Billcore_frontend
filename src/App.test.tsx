@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+﻿import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { App } from "./App";
 
@@ -10,6 +10,6 @@ describe("App", () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByRole("heading", { name: "Tome controle de suas finanças" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Organize suas contas a pagar em um so lugar." })).toBeInTheDocument();
   });
 });
