@@ -3,7 +3,9 @@ export interface CategoryOption {
   label: string;
 }
 
-const DEFAULT_API_BASE_URL = "http://localhost:8080";
+const DEFAULT_API_BASE_URL = import.meta.env.DEV
+  ? "http://localhost:8080"
+  : "https://billcore-backend.onrender.com";
 
 function parseCategoryOptions(raw: string | undefined): CategoryOption[] {
   if (!raw || raw.trim().length === 0) {
@@ -28,7 +30,8 @@ function parseCategoryOptions(raw: string | undefined): CategoryOption[] {
 }
 
 export function apiBaseUrl(): string {
-  return import.meta.env.VITE_API_BASE_URL ?? DEFAULT_API_BASE_URL;
+  const configured = import.meta.env.VITE_API_BASE_URL;
+  return configured && configured.trim().length > 0 ? configured.trim() : DEFAULT_API_BASE_URL;
 }
 
 export function activeFinancialProfileId(): string | null {
