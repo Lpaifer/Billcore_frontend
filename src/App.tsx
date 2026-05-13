@@ -10,7 +10,7 @@ import { AddPayableAccountPage } from "./pages/AddPayableAccountPage";
 import { EditPayableAccountPage } from "./pages/EditPayableAccountPage";
 import { PayableAccountsPage } from "./pages/PayableAccountsPage";
 import { DueSoonPayableAccountsPage } from "./pages/DueSoonPayableAccountsPage";
-import { NotificationsPage } from "./pages/NotificationsPage";
+import { CategoriesPage } from "./pages/CategoriesPage";
 import { RegisterPage } from "./pages/RegisterPage";
 
 export function App() {
@@ -25,8 +25,8 @@ export function App() {
           <Route element={<AuthenticatedShell />}>
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/payable-accounts" element={<PayableAccountsPage />} />
+            <Route path="/categories" element={<CategoriesPage />} />
             <Route path="/accounts/due-soon" element={<DueSoonPayableAccountsPage />} />
-            <Route path="/notifications" element={<NotificationsPage />} />
             <Route path="/payable-accounts/new" element={<AddPayableAccountPage />} />
             <Route path="/payable-accounts/:payableAccountId/edit" element={<EditPayableAccountPage />} />
           </Route>
