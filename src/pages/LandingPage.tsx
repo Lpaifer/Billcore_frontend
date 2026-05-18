@@ -1,4 +1,5 @@
-﻿import { Link } from "react-router-dom";
+﻿import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 type Feature = {
   icon: string;
@@ -35,8 +36,77 @@ const FEATURES: Feature[] = [
 ];
 
 export function LandingPage() {
+  const [showSurveyPopup, setShowSurveyPopup] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setShowSurveyPopup(true);
+    }, 1800);
+
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!showSurveyPopup) {
+      return undefined;
+    }
+
+    const onEsc = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setShowSurveyPopup(false);
+      }
+    };
+
+    window.addEventListener("keydown", onEsc);
+    return () => window.removeEventListener("keydown", onEsc);
+  }, [showSurveyPopup]);
+
   return (
     <div className="landing-page">
+      {showSurveyPopup && (
+        <div className="landing-popup-overlay" role="presentation">
+          <div
+            className="landing-popup"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="survey-popup-title"
+            aria-describedby="survey-popup-description"
+          >
+            <button
+              type="button"
+              className="landing-popup-close"
+              aria-label="Fechar convite de pesquisa"
+              onClick={() => setShowSurveyPopup(false)}
+            >
+              x
+            </button>
+            <span className="landing-popup-badge">Ajude a evoluir o BillCore</span>
+            <h3 id="survey-popup-title">Sua opiniao vale muito para nos.</h3>
+            <p id="survey-popup-description">
+              Em menos de 2 minutos, voce ajuda a construir um BillCore mais simples, util e alinhado
+              com a sua realidade. Participe da pesquisa e influencie as proximas melhorias do produto.
+            </p>
+            <div className="landing-popup-actions">
+              <a
+                href="https://forms.gle/fnpkBWeyYZDD36CE9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="landing-primary-button"
+              >
+                Responder pesquisa
+              </a>
+              <button
+                type="button"
+                className="landing-popup-secondary"
+                onClick={() => setShowSurveyPopup(false)}
+              >
+                Agora nao
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <header className="landing-header">
         <div className="landing-brand">BillCore</div>
         <div className="landing-header-actions">

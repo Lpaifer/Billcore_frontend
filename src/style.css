@@ -36,6 +36,82 @@ body {
   color: #0f172a;
 }
 
+.landing-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 20, 43, 0.58);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  z-index: 40;
+}
+
+.landing-popup {
+  width: min(560px, 100%);
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #d7deea;
+  box-shadow: 0 22px 50px rgba(8, 20, 45, 0.24);
+  padding: 1.3rem 1.3rem 1.1rem;
+  position: relative;
+}
+
+.landing-popup-close {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #d5dbea;
+  background: #f8fafd;
+  color: #334155;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.landing-popup-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: #e8efff;
+  color: #0b255a;
+  border: 1px solid #cdd9f6;
+  padding: 0.34rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.landing-popup h3 {
+  margin: 0.8rem 0 0;
+  font-size: clamp(1.35rem, 3.8vw, 1.8rem);
+  letter-spacing: -0.01em;
+}
+
+.landing-popup p {
+  margin: 0.7rem 0 0;
+  color: #566173;
+  line-height: 1.45;
+}
+
+.landing-popup-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.landing-popup-secondary {
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #1e293b;
+  padding: 0 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .landing-header {
   min-height: 80px;
   display: flex;
@@ -1205,6 +1281,19 @@ body {
 }
 
 @media (max-width: 960px) {
+  .landing-popup {
+    padding: 1rem;
+  }
+
+  .landing-popup-actions {
+    flex-direction: column;
+  }
+
+  .landing-popup-actions .landing-primary-button,
+  .landing-popup-secondary {
+    width: 100%;
+  }
+
   .landing-hero {
     grid-template-columns: 1fr;
   }
