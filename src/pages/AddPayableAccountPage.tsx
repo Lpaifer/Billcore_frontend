@@ -70,7 +70,7 @@ export function AddPayableAccountPage() {
     return () => {
       active = false;
     };
-  }, [blockedByConfig, financialProfileId, token]);
+  }, [blockedByConfig, financialProfileId, navigate, token]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
