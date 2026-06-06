@@ -1131,12 +1131,213 @@ body {
   opacity: 0.7;
 }
 
-.dashboard-placeholder {
+.dashboard-loading,
+.dashboard-muted {
+  margin: 1rem 0 0;
+  color: #6b7280;
+}
+
+.dashboard-empty {
   margin-top: 1rem;
-  border: 1px dashed #ccd3df;
+  background: #ffffff;
+  border: 1px solid #dde1e8;
   border-radius: 10px;
-  padding: 1.4rem;
-  color: #7a828f;
+  padding: 1.2rem;
+}
+
+.dashboard-empty strong {
+  display: block;
+  font-size: 1.05rem;
+}
+
+.dashboard-empty p {
+  margin: 0.45rem 0 1rem;
+  color: #6b7280;
+}
+
+.dashboard-metric-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.dashboard-metric-card {
+  background: #ffffff;
+  border: 1px solid #d8dee8;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.dashboard-metric-card span,
+.dashboard-metric-card small {
+  display: block;
+  color: #657084;
+}
+
+.dashboard-metric-card strong {
+  display: block;
+  margin-top: 0.45rem;
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+}
+
+.dashboard-metric-card small {
+  margin-top: 0.55rem;
+  font-size: 0.83rem;
+}
+
+.dashboard-metric-card.is-danger {
+  border-color: #f1b8b8;
+  background: #fff7f7;
+}
+
+.dashboard-metric-card.is-warning {
+  border-color: #efd79a;
+  background: #fffaf0;
+}
+
+.dashboard-metric-card.is-ok {
+  border-color: #b8e0cf;
+  background: #f3fbf7;
+}
+
+.dashboard-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) minmax(320px, 1.15fr);
+  gap: 1rem;
+}
+
+.dashboard-panel {
+  background: #ffffff;
+  border: 1px solid #dde1e8;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.dashboard-panel header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.dashboard-panel h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.dashboard-panel header span {
+  color: #6b7280;
+  font-size: 0.82rem;
+}
+
+.dashboard-status-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.dashboard-status-grid div {
+  border: 1px solid #edf0f5;
+  border-radius: 9px;
+  padding: 0.8rem;
+  background: #f8fafc;
+}
+
+.dashboard-status-grid strong,
+.dashboard-status-grid span {
+  display: block;
+}
+
+.dashboard-status-grid strong {
+  font-size: 1.8rem;
+}
+
+.dashboard-status-grid span {
+  margin-top: 0.25rem;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.dashboard-category-list {
+  margin-top: 0.9rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.dashboard-category-list article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.dashboard-category-list strong,
+.dashboard-category-list span {
+  display: block;
+}
+
+.dashboard-category-list span,
+.dashboard-category-list small {
+  color: #6b7280;
+}
+
+.dashboard-category-bar {
+  grid-column: 1 / -1;
+  height: 9px;
+  border-radius: 999px;
+  background: #edf1f7;
+  overflow: hidden;
+}
+
+.dashboard-category-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #0a1838;
+}
+
+.dashboard-urgent-panel {
+  margin-top: 1rem;
+}
+
+.dashboard-urgent-list {
+  margin-top: 0.85rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.dashboard-urgent-list a {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #edf0f5;
+  border-radius: 9px;
+  padding: 0.8rem;
+  background: #f8fafc;
+}
+
+.dashboard-urgent-list strong,
+.dashboard-urgent-list span,
+.dashboard-urgent-list small {
+  display: block;
+}
+
+.dashboard-urgent-list span,
+.dashboard-urgent-list small {
+  color: #6b7280;
+  font-size: 0.86rem;
+}
+
+.dashboard-urgent-list a > div:last-child {
+  display: grid;
+  justify-items: end;
+  gap: 0.35rem;
 }
 
 .notifications-list {
@@ -1390,5 +1591,23 @@ body {
 
   .filters-grid {
     grid-template-columns: 1fr;
+  }
+
+  .dashboard-metric-grid,
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-urgent-list a {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dashboard-urgent-list a > div:last-child {
+    justify-items: start;
   }
 }
