@@ -597,6 +597,21 @@ body {
   border-radius: 12px;
   background: linear-gradient(180deg, #1a2f61 0%, #152752 100%);
   border: 1px solid #22386f;
+  padding: 1rem 1rem 0.9rem;
+}
+
+.auth-stat-card strong {
+  display: block;
+  font-size: clamp(1.45rem, 3vw, 2.1rem);
+  line-height: 1;
+  font-weight: 700;
+}
+
+.auth-stat-card span {
+  display: block;
+  margin-top: 0.75rem;
+  color: #dce5f7;
+  font-size: 1rem;
 }
 
 .auth-form-panel {

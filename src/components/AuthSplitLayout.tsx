@@ -15,10 +15,22 @@ export function AuthSplitLayout({ children }: AuthSplitLayoutProps) {
             clareza financeira, tudo em um só lugar.
           </p>
           <div className="auth-stats-placeholder" aria-hidden="true">
-            <div className="auth-stat-card" />
-            <div className="auth-stat-card" />
-            <div className="auth-stat-card" />
-            <div className="auth-stat-card" />
+            <article className="auth-stat-card">
+              <strong>100% web</strong>
+              <span>Sem instalacao</span>
+            </article>
+            <article className="auth-stat-card">
+              <strong>Alertas</strong>
+              <span>Contra atrasos</span>
+            </article>
+            <article className="auth-stat-card">
+              <strong>Dashboard</strong>
+              <span>Indicadores claros</span>
+            </article>
+            <article className="auth-stat-card">
+              <strong>Historico</strong>
+              <span>Sempre acessivel</span>
+            </article>
           </div>
         </div>
       </aside>
